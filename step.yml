@@ -64,22 +64,22 @@ toolkit:
 
 
 inputs:
-  - BITBUCKET_SERVER_URL: https://bitbucket.company.com/
+  - BITBUCKET_SERVER_URL:
     opts:
       title: "Bitbucket server url"
       description: |
-        Bitbucket server url, must be ending with a '/' (example: https://bitbucket.company.com/)
+        Bitbucket server url, must be ending with a '/' example: https://bitbucket.company.com/
       is_expand: true
       is_required: true
       value_options: []
-  - BITBUCKET_SERVER_TOKEN: Default Value - you can leave this empty if you want to
+  - BITBUCKET_SERVER_TOKEN:
     opts:
       title: "Bitbucket token"
       is_expand: true
       is_sensitive: true
       is_required: true
       value_options: []
-  - PROJECT_ID: exampleProjectSpace
+  - PROJECT_ID:
     opts:
       title: "The Key of the Bitbucket Project"
       description: |
@@ -87,11 +87,11 @@ inputs:
       is_expand: true
       is_required: true
       value_options: []
-  - REPORT_NAME: com.wookiefpv.eslint
-      opts:
-        title: "key to be used for posting to bitbucket"
-        description: |
-          can by any string, example: com.wookiefpv.eslint or com.company.foo.bar
-        is_expand: true
-        is_required: true
-        value_options: []
+  - REPORT_NAME: "com.wookiefpv.eslintreporter"
+    opts:
+      title: "key to be used for posting to bitbucket"
+      description: |
+        can by any string, example: com.wookiefpv.eslint or com.company.foo.bar
+      is_expand: true
+      is_required: true
+      value_options: []
