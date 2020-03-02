@@ -45,17 +45,17 @@ type_tags:
   - notification
 
 is_requires_admin_user: true
-is_always_run: false
-is_skippable: false
+is_always_run: true
+is_skippable: true
 run_if: ""
 
 deps:
   brew:
-  - name: git
-  - name: wget
+    - name: git
+    - name: wget
   apt_get:
-  - name: git
-  - name: wget
+    - name: git
+    - name: wget
 
 
 toolkit:
@@ -64,24 +64,34 @@ toolkit:
 
 
 inputs:
-  - example_step_input: Default Value - you can leave this empty if you want to
+  - BITBUCKET_SERVER_URL: https://bitbucket.company.com/
     opts:
-      title: "Example Step Input"
-      summary: Summary. No more than 2-3 sentences.
+      title: "Bitbucket server url"
       description: |
-        Description of this input.
-
-        Can be Markdown formatted text.
+        Bitbucket server url, must be ending with a '/' (example: https://bitbucket.company.com/)
       is_expand: true
       is_required: true
       value_options: []
-
-outputs:
-  - EXAMPLE_STEP_OUTPUT:
+  - BITBUCKET_SERVER_TOKEN: Default Value - you can leave this empty if you want to
     opts:
-      title: "Example Step Output"
-      summary: Summary. No more than 2-3 sentences.
+      title: "Bitbucket token"
+      is_expand: true
+      is_sensitive: true
+      is_required: true
+      value_options: []
+  - PROJECT_ID: exampleProjectSpace
+    opts:
+      title: "The Key of the Bitbucket Project"
       description: |
-        Description of this output.
-
-        Can be Markdown formatted text.
+        Can be found in the URL of the Repo: https://bitbucket.company.com/projects/[PROJECT_ID]/repos/...
+      is_expand: true
+      is_required: true
+      value_options: []
+  - REPORT_NAME: com.wookiefpv.eslint
+      opts:
+        title: "key to be used for posting to bitbucket"
+        description: |
+          can by any string, example: com.wookiefpv.eslint or com.company.foo.bar
+        is_expand: true
+        is_required: true
+        value_options: []
