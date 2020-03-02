@@ -48,7 +48,7 @@ func createReport(totalErrorCount int, totalWarningCount int) Report {
 	report.Vendor = "WookieFPV"
 	report.LogoURL = "https://upload.wikimedia.org/wikipedia/en/e/e3/ESLint_logo.svg"
 	report.Data = append(report.Data, EslintReportData{Title: "warnings", Value: totalWarningCount})
-	report.Data = append(report.Data, EslintReportData{Title: "error", Value: totalErrorCount})
+	report.Data = append(report.Data, EslintReportData{Title: "errors", Value: totalErrorCount})
 	report.Link = "https://www.youtube.com/watch?v=oHg5SJYRHA0"
 	report.Details = "Hello World, here could be alot of text"
 

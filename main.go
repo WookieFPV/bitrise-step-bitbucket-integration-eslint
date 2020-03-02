@@ -11,6 +11,12 @@ func main() {
 		os.Exit(1)
 		return
 	}
+	var errEslint = runEslint()
+	if errEslint != nil {
+		fmt.Println(errEslint)
+		os.Exit(3)
+		return
+	}
 	var err = reportEslintErrors()
 	if err != nil {
 		fmt.Println(err)
