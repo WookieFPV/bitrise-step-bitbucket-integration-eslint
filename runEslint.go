@@ -23,7 +23,7 @@ func getESLintPath() (bool, string) {
 func runESLint(eslintPath string, srcDirectory string) error {
 	nodePath, err := exec.LookPath("node")
 	fmt.Println("running eslint...", nodePath, " ", eslintPath, " ", srcDirectory)
-	output, err := exec.Command(nodePath, eslintPath, srcDirectory, "f json", "o lint.json").CombinedOutput()
+	output, err := exec.Command(nodePath, eslintPath, srcDirectory, "--f json", "--o lint.json").CombinedOutput()
 	fmt.Printf("Output: %s\n", string(output[:]))
 	if err != nil {
 		fmt.Printf("Error: %s\n", err)
