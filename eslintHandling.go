@@ -80,7 +80,7 @@ func reportEslintErrors() error {
 
 	// COMPUTED VALUES
 	var token string = "Bearer " + os.Getenv("BITBUCKET_SERVER_TOKEN")
-	var url string = os.Getenv("BITBUCKET_SERVER_URL") + "rest/insights/1.0/projects/" + os.Getenv("PROJECT_ID") + "/repos/" + os.Getenv("REPOSITORY_NAME") + "/commits/" + os.Getenv("GIT_COMMIT_HASH") + "/reports/" + os.Getenv("REPORT_NAME")
+	var url string = os.Getenv("BITBUCKET_SERVER_URL") + "rest/insights/1.0/projects/" + os.Getenv("PROJECT_ID") + "/repos/" + os.Getenv("$BITRISEIO_GIT_REPOSITORY_SLUG") + "/commits/" + os.Getenv("GIT_COMMIT_HASH") + "/reports/" + os.Getenv("REPORT_NAME")
 	var annotationsURL string = url + "/annotations"
 	report := createReport(totalErrorCount, totalWarningCount)
 
