@@ -71,14 +71,6 @@ inputs:
         Bitbucket server url, must be ending with a '/' example: https://bitbucket.company.com/
       is_expand: true
       is_required: true
-      value_options: []
-  - BITBUCKET_SERVER_TOKEN:
-    opts:
-      title: "Bitbucket token"
-      is_expand: true
-      is_sensitive: true
-      is_required: true
-      value_options: []
   - PROJECT_ID:
     opts:
       title: "The Key of the Bitbucket Project"
@@ -86,7 +78,6 @@ inputs:
         Can be found in the URL of the Repo: https://bitbucket.company.com/projects/[PROJECT_ID]/repos/...
       is_expand: true
       is_required: true
-      value_options: []
   - REPORT_NAME: "com.wookiefpv.eslintreporter"
     opts:
       title: "key to be used for posting to bitbucket"
@@ -94,4 +85,3 @@ inputs:
         can by any string, example: com.wookiefpv.eslint or com.company.foo.bar
       is_expand: true
       is_required: true
-      value_options: []
