@@ -61,7 +61,7 @@ func createReport(totalErrorCount int, totalWarningCount int) Report {
 }
 
 func reportEslintErrors() error {
-	jsonFile, err := os.Open(os.Getenv("BITRISE_SOURCE_DIR") + "lint.json")
+	jsonFile, err := os.Open(os.Getenv("BITRISE_SOURCE_DIR") + "/lint.json")
 	if err != nil {
 		fmt.Println(err)
 		return err
