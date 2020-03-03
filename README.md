@@ -12,6 +12,24 @@ and call `bitrise run test`.
 *Check the `bitrise.yml` file for required inputs which have to be
 added to your `.bitrise.secrets.yml` file!*
 
+```
+- git::https://github.com/WookieFPV/bitrise-step-bitbucket-integration-eslint.git:
+        inputs:
+        - PROJECT_ID: "$PROJECT_ID"
+        - REPORT_NAME: com.wookiefpv.eslintreporter
+        - BITBUCKET_SERVER_URL: "$BITBUCKET_SERVER_URL"
+        title: bitbucket ESLint integration
+        is_always_run: true
+
+
+Secrets: 
+    BITBUCKET_SERVER_TOKEN
+
+Env Vars:
+    BITBUCKET_SERVER_URL
+    PROJECT_ID: 
+
+```
 Step by step:
 
 1. Open up your Terminal / Command Line
