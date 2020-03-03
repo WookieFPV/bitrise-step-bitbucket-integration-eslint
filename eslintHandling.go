@@ -77,7 +77,7 @@ func reportEslintErrors() error {
 
 	json.Unmarshal(byteValue, &issues)
 
-	annotations, totalWarningCount, totalErrorCount := getStatsFromIssues(issues)
+	annotations, totalErrorCount, totalWarningCount := getStatsFromIssues(issues)
 
 	// COMPUTED VALUES
 	var token string = "Bearer " + os.Getenv("BITBUCKET_SERVER_TOKEN")
