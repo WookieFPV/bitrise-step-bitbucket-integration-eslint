@@ -8,14 +8,19 @@ import (
 	"strings"
 )
 
-func getESLintPath() (bool, string) {
+func getESLintPath(basePath string) (bool, string) {
 	isExist := true
 	path, err := exec.LookPath("eslint")
+	fmt.Println("no global eslint installation")
 	if err != nil {
-		path, err = exec.LookPath("node_modules/eslint/bin/eslint.js")
+		path, err = exec.LookPath(basePath + "node_modules/eslint/bin/eslint.js")
+		fmt.Println("no eslint found i: " + basePath + "node_modules/eslint/bin/eslint.js")
 		if err != nil {
-			fmt.Println("First of all, install eslint")
-			isExist = false
+			path, err = exec.LookPath(basePath + "node_modules/.bin/eslint.js")
+			if err != nil {
+				fmt.Println("no eslint found in: " + basePath + "node_modules/.bin/eslint.js")
+				isExist = false
+			}
 		}
 	}
 	return isExist, path
@@ -39,7 +44,7 @@ func runESLint(eslintPath string, srcDirectory string) (bool, error) {
 
 func runEslint() (bool, error) {
 	srcDirectory := os.Getenv("BITRISE_SOURCE_DIR") + "/"
-	isExist, eslintPath := getESLintPath()
+	isExist, eslintPath := getESLintPath(srcDirectory)
 	if !isExist {
 		return false, errors.New("ESLint was not found")
 	}
