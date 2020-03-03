@@ -5,6 +5,7 @@ import (
 	"fmt"
 	"os"
 	"os/exec"
+	"strings"
 )
 
 func getESLintPath() (bool, string) {
@@ -20,22 +21,27 @@ func getESLintPath() (bool, string) {
 	return isExist, path
 }
 
-func runESLint(eslintPath string, srcDirectory string) error {
+func runESLint(eslintPath string, srcDirectory string) (bool, error) {
 	nodePath, err := exec.LookPath("node")
 	fmt.Println("running eslint...", nodePath, " ", eslintPath, " ", srcDirectory)
 	output, err := exec.Command(nodePath, eslintPath, srcDirectory, "--f", "json", "--o", "lint.json").CombinedOutput()
 	fmt.Printf("Output: %s\n", string(output[:]))
 	if err != nil {
 		fmt.Printf("Error: %s\n", err)
+		if strings.Contains(err.Error(), "1") { // Linting worked but had errors
+			return false, nil
+		}
+		// Linting was not possible
+		return false, err
 	}
-	return nil
+	return true, nil
 }
 
-func runEslint() error {
+func runEslint() (bool, error) {
 	srcDirectory := os.Getenv("BITRISE_SOURCE_DIR") + "/"
 	isExist, eslintPath := getESLintPath()
 	if !isExist {
-		return errors.New("ESLint was not found")
+		return false, errors.New("ESLint was not found")
 	}
 	return runESLint(eslintPath, srcDirectory)
 }

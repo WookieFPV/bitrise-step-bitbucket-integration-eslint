@@ -10,7 +10,7 @@ func main() {
 		os.Exit(1)
 		return
 	}
-	var errEslint = runEslint()
+	var lintingWithoutErrors, errEslint = runEslint()
 	if errEslint != nil {
 		fmt.Println("runEslint failed: ", errEslint)
 		os.Exit(3)
@@ -22,5 +22,11 @@ func main() {
 		os.Exit(2)
 		return
 	}
-	os.Exit(0)
+	if lintingWithoutErrors {
+		os.Exit(0)
+		return
+	} else {
+		os.Exit(4)
+		return
+	}
 }

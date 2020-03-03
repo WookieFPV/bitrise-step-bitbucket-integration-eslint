@@ -13,7 +13,7 @@ app:
 
   # If you want to share this step into a StepLib
   - BITRISE_STEP_ID: bitbucket-integration-eslint
-  - BITRISE_STEP_VERSION: "0.0.4"
+  - BITRISE_STEP_VERSION: "0.0.5"
   - BITRISE_STEP_GIT_CLONE_URL: https://github.com/WookieFPV/bitrise-step-bitbucket-integration-eslint.git
   - MY_STEPLIB_REPO_FORK_GIT_URL: $MY_STEPLIB_REPO_FORK_GIT_URL
 
