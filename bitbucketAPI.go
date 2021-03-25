@@ -54,8 +54,7 @@ func deleteAnnotations(annotationsURL string, token string) error {
 }
 
 func postAnnotations(annotationsURL string, token string, annotations []Annotation) error {
-	fmt.Println("annotations", annotations)
-
+	
 	body := &BitbucketAnnotations{Annotations: annotations}
 	buf := new(bytes.Buffer)
 	json.NewEncoder(buf).Encode(body)
