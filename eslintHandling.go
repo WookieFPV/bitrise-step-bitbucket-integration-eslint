@@ -36,7 +36,7 @@ func getStatsFromIssues(issues []Issues) ([]Annotation, int, int) {
 			var path string
 			path = strings.ReplaceAll(issues[i].FilePath, basePath, "")
 			annotations = append(annotations, Annotation{Path: path, Line: anno.Line, Message: anno.Message, Severity: getSeverityString(anno.Severity)})
-			fmt.Println("Messages :", issues[i].Messages[x])
+			if anno.Severity == 2 {fmt.Println("ERRORS :", issues[i].Messages[x])}
 		}
 	}
 	return annotations, totalErrorCount, totalWarningCount
@@ -68,10 +68,9 @@ func reportEslintErrors() error {
 		fmt.Println(err)
 	}
 	for _, f := range files {
-		fmt.Println(f.Name())
-		fileNames = append(fileNames,f.Name())
-		fmt.Println(fileNames)
+		fileNames = append(fileNames,f.Name())		
 	}
+	fmt.Println(fileNames)
 	fmt.Println(len(fileNames))
 
 	var combinedIssues []Issues
@@ -83,7 +82,6 @@ func reportEslintErrors() error {
 		fmt.Println("os.Open(lintFile) failed", err, lintFile)
 		return err
 	}
-	fmt.Println("Successfully Opened lint file")
 	// defer the closing of our jsonFile so that we can parse it later on
 	defer jsonFile.Close()
 
