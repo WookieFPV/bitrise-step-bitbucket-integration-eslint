@@ -63,7 +63,7 @@ func postAnnotations(annotationsURL string, token string, annotations []Annotati
 	}
 	// fill annotations with warnings until limit reached
 	for i := 0; i < len(annotations); i++ {
-		for len(filteredAnnotations) < 1000 {
+		if len(filteredAnnotations) < 1000 {
 			filteredAnnotations = append(filteredAnnotations, annotations[i])
 		}
 	}
