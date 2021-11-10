@@ -54,9 +54,23 @@ func deleteAnnotations(annotationsURL string, token string) error {
 }
 
 func postAnnotations(annotationsURL string, token string, annotations []Annotation) error {
-	fmt.Println("annotations", annotations)
-
-	body := &BitbucketAnnotations{Annotations: annotations}
+	// filter annotations for onl errors because of annotation limit on Bitbucket server
+	var filteredAnnotations []Annotation
+	for i := 0; i < len(annotations); i++ {
+		if annotations[i].Severity == "HIGH" {
+			filteredAnnotations = append(filteredAnnotations, annotations[i])
+		}
+	}
+	// fill annotations with warnings until limit reached
+	for i := 0; i < len(annotations); i++ {
+		if len(filteredAnnotations) < 1000 {
+			if annotations[i].Severity != "HIGH" {
+				filteredAnnotations = append(filteredAnnotations, annotations[i])
+				
+			}
+		}
+	}
+	body := &BitbucketAnnotations{Annotations: filteredAnnotations}
 	buf := new(bytes.Buffer)
 	json.NewEncoder(buf).Encode(body)
 	req, _ := http.NewRequest("POST", annotationsURL, buf)

@@ -36,7 +36,7 @@ func getStatsFromIssues(issues []Issues) ([]Annotation, int, int) {
 			var path string
 			path = strings.ReplaceAll(issues[i].FilePath, basePath, "")
 			annotations = append(annotations, Annotation{Path: path, Line: anno.Line, Message: anno.Message, Severity: getSeverityString(anno.Severity)})
-			fmt.Println("Messages :", issues[i].Messages[x])
+			if anno.Severity == 2 {fmt.Println("ERRORS :", issues[i].Messages[x])}
 		}
 	}
 	return annotations, totalErrorCount, totalWarningCount
@@ -61,24 +61,44 @@ func createReport(totalErrorCount int, totalWarningCount int) Report {
 }
 
 func reportEslintErrors() error {
-	lintFile := os.Getenv("BITRISE_SOURCE_DIR") + "/lint.json"
+	var fileNames []string
+	// get all fileNames and store in Array for iterating
+	files, err := ioutil.ReadDir(os.Getenv("BITRISE_SOURCE_DIR") + "/lint-results")
+	if err != nil {
+		fmt.Println(err)
+	}
+	for _, f := range files {
+		fileNames = append(fileNames,f.Name())		
+	}
+	fmt.Println(fileNames)
+	fmt.Println(len(fileNames))
+
+	var combinedIssues []Issues
+
+	for i := 0; i< len(fileNames); i++ {
+	lintFile := os.Getenv("BITRISE_SOURCE_DIR") + "/lint-results/" + fileNames[i]
 	jsonFile, err := os.Open(lintFile)
 	if err != nil {
 		fmt.Println("os.Open(lintFile) failed", err, lintFile)
 		return err
 	}
-	fmt.Println("Successfully Opened lint file")
 	// defer the closing of our jsonFile so that we can parse it later on
 	defer jsonFile.Close()
 
 	byteValue, _ := ioutil.ReadAll(jsonFile)
-
 	var issues []Issues
-
+	
 	json.Unmarshal(byteValue, &issues)
+	fmt.Println(fileNames[i],"has",len(issues), "issues")
+	combinedIssues = append(combinedIssues, issues...)
 
-	annotations, totalErrorCount, totalWarningCount := getStatsFromIssues(issues)
+	}
+ 	fmt.Println(len(combinedIssues), "combined issues found")
 
+
+
+	annotations, totalErrorCount, totalWarningCount := getStatsFromIssues(combinedIssues)
+	
 	// COMPUTED VALUES
 	var token string = "Bearer " + os.Getenv("BITBUCKET_SERVER_TOKEN")
 	var url string = os.Getenv("BITBUCKET_SERVER_URL") + "rest/insights/1.0/projects/" + os.Getenv("PROJECT_ID") + "/repos/" + os.Getenv("BITRISEIO_GIT_REPOSITORY_SLUG") + "/commits/" + os.Getenv("BITRISE_GIT_COMMIT") + "/reports/" + os.Getenv("REPORT_NAME")
@@ -100,5 +120,7 @@ func reportEslintErrors() error {
 	if err != nil {
 		return err
 	}
+	
 	return nil
+	
 }
